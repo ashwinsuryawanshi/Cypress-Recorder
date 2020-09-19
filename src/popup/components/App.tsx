@@ -25,14 +25,18 @@ export default () => {
   };
 
   React.useEffect((): void => {
-    chrome.storage.local.get(['status', 'codeBlocks'], result => {
-      if (result.codeBlocks) setCodeBlocks(result.codeBlocks);
-      if (result.status === RecState.ON) setRecStatus(RecState.ON);
-      else if (result.status === RecState.PAUSED) setRecStatus(RecState.PAUSED);
-    });
-    chrome.tabs.query({ active: true, currentWindow: true }, activeTab => {
-      if (activeTab[0].url.startsWith('chrome://')) setIsValidTab(false);
-    });
+    if (chrome.storage) {
+      chrome.storage.local.get(['status', 'codeBlocks'], result => {
+        if (result.codeBlocks) setCodeBlocks(result.codeBlocks);
+        if (result.status === RecState.ON) setRecStatus(RecState.ON);
+        else if (result.status === RecState.PAUSED) setRecStatus(RecState.PAUSED);
+      });
+    }
+    if (chrome.tabs) {
+      chrome.tabs.query({ active: true, currentWindow: true }, activeTab => {
+        if (activeTab[0].url.startsWith('chrome://')) setIsValidTab(false);
+      });
+    }
   }, []);
 
   React.useEffect((): () => void => {
@@ -43,7 +47,9 @@ export default () => {
       else if (type === ControlAction.RESET) resetRecording();
       else if (type === ControlAction.PUSH) setCodeBlocks(blocks => [...blocks, payload]);
     }
-    chrome.runtime.onMessage.addListener(handleMessageFromBackground);
+    if (chrome.runtime && chrome.runtime.onMessage) {
+      chrome.runtime.onMessage.addListener(handleMessageFromBackground);
+    }
     return () => {
       chrome.runtime.onMessage.removeListener(handleMessageFromBackground);
     };
