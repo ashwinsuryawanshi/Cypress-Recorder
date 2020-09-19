@@ -4,7 +4,7 @@
   "description": "Records a user session and generates cypress code for automation and testing purposes.",
   "main": "index.js",
   "scripts": {
-    "start": "npx tsc --noEmit && npx parcel ./src/popup/index.html",
+    "start": "npx tsc --noEmit && npx parcel ./src/popup/index.html ./src/background/background.ts ./src/content-scripts/eventRecorder.ts",
     "build": "npx tsc --noEmit && npx parcel build ./src/popup/index.html ./src/background/background.ts ./src/content-scripts/eventRecorder.ts",
     "test": "jest --verbose",
     "clean": "rm -rf dist .cache && mkdir dist && cp ./src/manifest.json dist && cp -r ./src/assets/images/. dist",
@@ -74,7 +74,7 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest": "^24.9.0",
     "jest-enzyme": "^7.1.1",
-    "parcel-bundler": "^1.12.4",
+    "parcel": "^2.0.0-beta.1",
     "sass": "^1.23.0",
     "ts-jest": "^26.1.1",
     "typescript": "^3.6.4"

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-​const ASPECT_RATIO = 436 / 527;
+let ASPECT_RATIO = 436 / 527;
 
 type Props = {
   size?: number,
