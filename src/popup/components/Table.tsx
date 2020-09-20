@@ -25,30 +25,30 @@ export default () => {
                     <td>Prisma</td>
                     <td>Campaign Buy</td>
                     <td>Create Placement</td>
-                    <td class="td-center-align">
-                        <i class="fa fa-pencil margin-right" aria-hidden="true"></i>
-                        <i class="fa fa-play-circle margin-right" aria-hidden="true"></i>
-                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    <td className="td-center-align">
+                        <i className="fa fa-pencil margin-right" aria-hidden="true"></i>
+                        <i className="fa fa-play-circle margin-right" aria-hidden="true"></i>
+                        <i className="fa fa-trash" aria-hidden="true"></i>
                     </td>
                 </tr>
                 <tr>
                     <td>Prisma</td>
                     <td>Campaign Buy</td>
                     <td>Create Package</td>
-                    <td class="td-center-align">
-                        <i class="fa fa-pencil margin-right" aria-hidden="true"></i>
-                        <i class="fa fa-play-circle margin-right" aria-hidden="true"></i>
-                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    <td className="td-center-align">
+                        <i className="fa fa-pencil margin-right" aria-hidden="true"></i>
+                        <i className="fa fa-play-circle margin-right" aria-hidden="true"></i>
+                        <i className="fa fa-trash" aria-hidden="true"></i>
                     </td>
                 </tr>
                 <tr>
                     <td>Prisma</td>
                     <td>Campaign Order</td>
                     <td>Create Order</td>
-                    <td class="td-center-align">
-                        <i class="fa fa-pencil margin-right" aria-hidden="true"></i>
-                        <i class="fa fa-play-circle margin-right" aria-hidden="true"></i>
-                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    <td className="td-center-align">
+                        <i className="fa fa-pencil margin-right" aria-hidden="true"></i>
+                        <i className="fa fa-play-circle margin-right" aria-hidden="true"></i>
+                        <i className="fa fa-trash" aria-hidden="true"></i>
                     </td>
                 </tr>
 
