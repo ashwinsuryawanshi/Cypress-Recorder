@@ -9,6 +9,7 @@ export enum EventType {
 export enum ControlAction {
   START,
   STOP,
+  SAVE,
   RESET,
   DELETE,
   MOVE,

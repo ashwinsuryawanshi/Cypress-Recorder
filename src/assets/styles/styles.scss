@@ -57,6 +57,7 @@ body {
   font-size: 22px;
   margin-left: 10px;
   font-weight: 200;
+  padding: 15px;
 }
 
 #infobox {
@@ -84,6 +85,11 @@ body {
 
   & #reset-wrap {
     flex: 1;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  & #save-wrap {
     display: flex;
     justify-content: flex-start;
   }
@@ -265,7 +271,7 @@ mark {
 #tests-recorder {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
-  width: 100%;
+  width: 95%;
 }
 
 #tests-recorder td, #tests-recorder th {
@@ -281,6 +287,15 @@ mark {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #4CAF50;
+  background-color: $cypress-green;
   color: white;
+}
+.margin-right {
+  margin-right: 10px;
+}
+.td-center-align {
+  text-align: center;
+  i {
+    cursor: pointer;
+  }
 }

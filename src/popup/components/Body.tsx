@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Block } from '../../types';
-import {ControlAction, RecState} from '../../constants';
+import { ControlAction, RecState } from '../../constants';
 
 import CodeDisplay from './CodeDisplay';
 import LandingBox from './LandingBox';
@@ -21,17 +21,11 @@ export default ({
   destroyBlock,
   moveBlock,
 }: BodyProps) => (
-  <div id="body">
-      <div id="run-all-button">
-          <button type={"button"} className="button">Run All</button>
-      </div>
-    <Table/>
+    <div id="body">
+      {recStatus === RecState.OFF && <Table />}
       <div>
-          <button type={"button"} className="button">Add New</button>
+        {recStatus === RecState.OFF && <LandingBox isValidTab={isValidTab} />}
+        {recStatus !== RecState.OFF && <CodeDisplay codeBlocks={codeBlocks} destroyBlock={destroyBlock} moveBlock={moveBlock} />}
       </div>
-    <div>
-      {recStatus === RecState.OFF && <LandingBox isValidTab={isValidTab}/>}
-      {recStatus !== RecState.OFF && <CodeDisplay codeBlocks={codeBlocks} destroyBlock={destroyBlock} moveBlock={moveBlock}/>}
     </div>
-  </div>
-);
+  );

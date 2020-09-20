@@ -16,29 +16,42 @@ export default () => {
             {/*</button>*/}
             <table id="tests-recorder">
                 <tr>
-                    <th>Test Name</th>
-                    <th></th>
-                    <th></th>
-                    <th>Last Run</th>
+                    <th>Project</th>
+                    <th>Module</th>
+                    <th>Case</th>
+                    <th>Action</th>
                 </tr>
                 <tr>
-                    <td>Open Flighting Panel</td>
-                    <td><button type={"button"} className="small-button">Edit</button></td>
-                    <td><button type={"button"} className="small-button">Run</button></td>
-                    <td>Success</td>
+                    <td>Prisma</td>
+                    <td>Campaign Buy</td>
+                    <td>Create Placement</td>
+                    <td class="td-center-align">
+                        <i class="fa fa-pencil margin-right" aria-hidden="true"></i>
+                        <i class="fa fa-play-circle margin-right" aria-hidden="true"></i>
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Close Flighting Panel</td>
-                    <td><button type={"button"} className="small-button">Edit</button></td>
-                    <td><button type={"button"} className="small-button">Run</button></td>
-                    <td>Fail</td>
+                    <td>Prisma</td>
+                    <td>Campaign Buy</td>
+                    <td>Create Package</td>
+                    <td class="td-center-align">
+                        <i class="fa fa-pencil margin-right" aria-hidden="true"></i>
+                        <i class="fa fa-play-circle margin-right" aria-hidden="true"></i>
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Edit Flighting table</td>
-                    <td><button type={"button"} className="small-button">Edit</button></td>
-                    <td><button type={"button"} className="small-button">Run</button></td>
-                    <td>Success</td>
+                    <td>Prisma</td>
+                    <td>Campaign Order</td>
+                    <td>Create Order</td>
+                    <td class="td-center-align">
+                        <i class="fa fa-pencil margin-right" aria-hidden="true"></i>
+                        <i class="fa fa-play-circle margin-right" aria-hidden="true"></i>
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </td>
                 </tr>
+
             </table>
         </>
     );

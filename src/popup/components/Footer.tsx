@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ToggleButton from './ToggleButton';
 import ResetButton from './ResetButton';
+import SaveButton from './SaveButton';
 import ClipboardButton from './ClipboardButton';
 import { ControlAction, RecState } from '../../constants';
 
@@ -19,6 +20,7 @@ export default ({
 } : FooterProps) => (
   <div id="footer">
     <ToggleButton recStatus={recStatus} handleToggle={handleToggle} isValidTab={isValidTab} />
+    {recStatus === RecState.PAUSED && <SaveButton handleToggle={handleToggle} />}
     {recStatus === RecState.PAUSED && <ResetButton handleToggle={handleToggle} />}
     {recStatus === RecState.PAUSED && <ClipboardButton copyToClipboard={copyToClipboard} />}
   </div>
