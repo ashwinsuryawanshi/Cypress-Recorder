@@ -12,7 +12,8 @@ export interface BodyProps {
   codeBlocks: Block[],
   destroyBlock: (index: number) => void,
   moveBlock: (dragIdx: number, dropIdx: number) => void,
-}
+  toggleInfoDisplay: () => void,
+  }
 
 export default ({
   recStatus,
@@ -20,9 +21,10 @@ export default ({
   isValidTab,
   destroyBlock,
   moveBlock,
+  toggleInfoDisplay
 }: BodyProps) => (
     <div id="body">
-      {recStatus === RecState.OFF && <Table />}
+      {recStatus === RecState.OFF && <Table toggleInfoDisplay={toggleInfoDisplay} />}
       <div>
         {recStatus === RecState.OFF && <LandingBox isValidTab={isValidTab} />}
         {recStatus !== RecState.OFF && <CodeDisplay codeBlocks={codeBlocks} destroyBlock={destroyBlock} moveBlock={moveBlock} />}

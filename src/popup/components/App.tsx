@@ -111,12 +111,14 @@ export default () => {
               isValidTab={isValidTab}
               destroyBlock={destroyBlock}
               moveBlock={moveBlock}
+              toggleInfoDisplay={toggleInfoDisplay}
             />
           )
         )
       }
       <Footer
         isValidTab={isValidTab}
+        shouldInfoDisplay={shouldInfoDisplay}
         recStatus={recStatus}
         handleToggle={handleToggle}
         copyToClipboard={copyToClipboard}

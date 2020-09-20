@@ -3,14 +3,16 @@ import { ControlAction, RecState } from '../../constants';
 
 export interface ToggleButtonProps {
   isValidTab: boolean,
+  shouldInfoDisplay: boolean
   recStatus: RecState,
   handleToggle: (action: ControlAction) => void,
 }
 
-export default ({ recStatus, handleToggle, isValidTab }: ToggleButtonProps) => {
+export default ({ recStatus, handleToggle, isValidTab, shouldInfoDisplay }: ToggleButtonProps) => {
   const handleClick = (): void => {
     let action: ControlAction;
-    if (recStatus === RecState.OFF || recStatus === RecState.PAUSED) action = ControlAction.START;
+    if ((recStatus === RecState.OFF || recStatus === RecState.PAUSED) && !shouldInfoDisplay) action = ControlAction.START;
+    else if (recStatus === RecState.OFF && shouldInfoDisplay) action = ControlAction.RESET;
     else if (recStatus === RecState.ON) action = ControlAction.STOP;
     handleToggle(action);
   };
@@ -29,7 +31,8 @@ export default ({ recStatus, handleToggle, isValidTab }: ToggleButtonProps) => {
         disabled={!isValidTab && (recStatus === RecState.OFF || recStatus === RecState.PAUSED)}
       >
         {(recStatus === RecState.OFF || recStatus === RecState.PAUSED) && !isValidTab && 'Invalid Tab'}
-        {recStatus === RecState.OFF && isValidTab && 'Start Recording'}
+        {recStatus === RecState.OFF && isValidTab && !shouldInfoDisplay && 'Start Recording'}
+        {recStatus === RecState.OFF && isValidTab && shouldInfoDisplay && 'Back'}
         {recStatus === RecState.PAUSED && isValidTab && 'Resume'}
         {recStatus === RecState.ON && 'Stop Recording'}
       </button>
