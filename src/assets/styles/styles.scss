@@ -3,7 +3,7 @@ $primary-color: #333;
 $primary-background-color: #fff8dc;
 $max-height: 600px;
 $max-width: 800px;
-$cypress-green:  rgb(49, 158, 107);
+$cypress-green:  rgb(4, 161, 225);
 $pale-green: rgb(248,251,249);
 
 body {
@@ -44,11 +44,12 @@ body {
 
 #body {
   background-color: $pale-green;
-  display: flex;
+  margin-top: 60px;
   align-items: center;
   justify-content: center;
   flex-grow: 1;
   padding: 20px;
+  width: 100% !important;
 }
 
 #title {
@@ -92,7 +93,7 @@ body {
     display: flex;
     justify-content: flex-end;
   }
-  
+
   & #toggle {
     align-self: flex-start;
   }
@@ -124,7 +125,7 @@ body {
   flex-direction: column;
   align-items: flex-start;
   flex-grow: 1;
-  padding: 20;
+  padding: 20px;
   overflow-wrap: break-word;
 }
 
@@ -213,6 +214,26 @@ mark {
     background-color: $pale-green;
     color: $cypress-green;
     transition: all 0.15s ease 0s;
+    cursor: pointer;
+  }
+}
+
+.small-button {
+  background-color: $cypress-green;
+  border: 1px solid $pale-green;
+  margin: 5px;
+  padding: 7px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 400;
+  color: $pale-green;
+  line-height: 8px;
+
+  &:hover {
+    background-color: $pale-green;
+    color: $cypress-green;
+    transition: all 0.15s ease 0s;
+    cursor: pointer;
   }
 }
 
@@ -239,4 +260,27 @@ mark {
   color: $pale-green;
   font-size: 14px;
   margin-left: 10px;
+}
+
+#tests-recorder {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#tests-recorder td, #tests-recorder th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#tests-recorder tr:nth-child(even){background-color: #f2f2f2;}
+
+#tests-recorder tr:hover {background-color: #ddd;}
+
+#tests-recorder th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
 }
