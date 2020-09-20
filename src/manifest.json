@@ -2,14 +2,15 @@
   "name": "Gannyantra",
   "short_name": "Gannyantra",
   "version": "1.0.4",
-  "description": "Records a user session and generates cypress code for automation and testing purposes.",
+  "description": "Records a user session and generates code for automation and testing purposes.",
   "manifest_version": 2,
   "permissions": [
     "activeTab",
     "clipboardWrite",
     "storage",
     "tabs",
-    "webNavigation"
+    "webNavigation",
+    "fileSystem"
   ],
   "optional_permissions": [
     "http://*/*",

@@ -7,7 +7,7 @@ export interface TableProps {
 
 export default ({ toggleInfoDisplay }: TableProps) => {
     const handleRowClick = (id): void => {
-        toggleInfoDisplay(id);
+        toggleInfoDisplay();
     };
     return (
         <>
