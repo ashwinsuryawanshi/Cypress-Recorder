@@ -14,8 +14,16 @@ export default () => {
   const [codeBlocks, setCodeBlocks] = React.useState<Block[]>([]);
   const [shouldInfoDisplay, setShouldInfoDisplay] = React.useState<boolean>(false);
   const [shouldEditDisplay, setShouldEditDisplay] = React.useState<boolean>(false);
-  const [editedTest, setEditedTest] = React.useState<ControlAction>(null);
+  const [editedTest, setEditedTest] = React.useState<any>(null);
   const [isValidTab, setIsValidTab] = React.useState<boolean>(true);
+  let TEST_RECORD = {
+    id: 999,
+    projectName: '',
+    testSuiteName: '',
+    testCaseName: '',
+    testScript: ''
+  };
+
   const [recordings, setRecordings] = React.useState([{
         id: 0,
         projectName: 'Prisma',
@@ -95,10 +103,12 @@ export default () => {
   const handleToggle = (action: ControlAction): void => {
     if (shouldInfoDisplay) setShouldInfoDisplay(false);
     else if (shouldEditDisplay) setShouldEditDisplay(false);
-    if (action === ControlAction.START) startRecording();
-    else if (action === ControlAction.STOP) stopRecording();
-    else if (action === ControlAction.RESET) resetRecording();
-    chrome.runtime.sendMessage({ type: action });
+    if([ControlAction.START, ControlAction.STOP, ControlAction.RESET, ControlAction.MOVE, ControlAction.PUSH].includes(action)) {
+      if (action === ControlAction.START) startRecording();
+      else if (action === ControlAction.STOP) stopRecording();
+      else if (action === ControlAction.RESET) resetRecording();
+      chrome.runtime.sendMessage({ type: action });
+    }
   };
 
   const toggleInfoDisplay = (): void => {
@@ -108,6 +118,37 @@ export default () => {
   const toggleEditDisplay = (test: any): void => {
     setShouldEditDisplay(should => !should);
     setEditedTest(test);
+  };
+
+  const handleSave = (): void => {
+    handleToggle(ControlAction.SAVE);
+    setShouldEditDisplay(false);
+    let currentTestRecord;
+    if(editedTest && shouldEditDisplay) {
+      currentTestRecord = recordings.filter(function (record) {
+        return record.id === editedTest.id;
+      })[0];
+      currentTestRecord.testCaseName = (document.getElementById('test-name') as HTMLInputElement).value;
+      setEditedTest(null);
+      recordings[editedTest.id] = currentTestRecord;
+    } else {
+      currentTestRecord = Object.create(TEST_RECORD);
+      currentTestRecord.id = recordings.length;
+      currentTestRecord.testCaseName = (document.getElementById('test-name') as HTMLInputElement).value;
+      currentTestRecord.projectName = 'Prisma';
+      currentTestRecord.testSuiteName = ' Campaign Buy';
+      recordings.push(currentTestRecord);
+    }
+    setRecordings(recordings);
+    resetRecording();
+  };
+
+  const handleDelete = (id): void => {
+    handleToggle(ControlAction.DELETE);
+    const updatedRecords = recordings.filter(function (record) {
+      return record.id !== id;
+    });
+    setRecordings(updatedRecords);
   };
 
   const copyToClipboard = async (): Promise<void> => {
@@ -152,6 +193,7 @@ export default () => {
           recordings={recordings}
           action={action}
           setAction={setAction}
+          handleDelete={handleDelete}
           isValidTab={isValidTab}
           destroyBlock={destroyBlock}
           moveBlock={moveBlock}
@@ -162,6 +204,7 @@ export default () => {
         isValidTab={isValidTab}
         shouldInfoDisplay={shouldInfoDisplay}
         shouldEditDisplay={shouldEditDisplay}
+        handleSave={handleSave}
         recStatus={recStatus}
         action={action}
         handleToggle={handleToggle}

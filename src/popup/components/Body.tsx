@@ -17,6 +17,7 @@ export interface BodyProps {
   destroyBlock: (index: number) => void,
   moveBlock: (dragIdx: number, dropIdx: number) => void,
   toggleInfoDisplay: () => void,
+  handleDelete: (id: any) => void,
   toggleEditDisplay: (test: any) => void
 }
 
@@ -29,10 +30,11 @@ export default ({
   destroyBlock,
   moveBlock,
   toggleInfoDisplay,
-  toggleEditDisplay
+  toggleEditDisplay,
+  handleDelete
 }: BodyProps) => (
     <div id="body">
-      {recStatus === RecState.OFF && <Table toggleInfoDisplay={toggleInfoDisplay} toggleEditDisplay={toggleEditDisplay} setAction={setAction} recordings={recordings}/>}
+      {recStatus === RecState.OFF && <Table toggleInfoDisplay={toggleInfoDisplay} toggleEditDisplay={toggleEditDisplay} handleDelete={handleDelete} setAction={setAction} recordings={recordings}/>}
       {recStatus !== RecState.OFF && <TestName testName={null} editable={true}/>}
       <div>
         {recStatus === RecState.OFF && <LandingBox isValidTab={isValidTab} />}

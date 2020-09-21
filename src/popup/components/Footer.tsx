@@ -11,6 +11,7 @@ export interface FooterProps {
   isValidTab: boolean,
   shouldInfoDisplay: boolean,
   shouldEditDisplay: boolean,
+  handleSave: () => void,
   recStatus: RecState,
   action: ControlAction,
   handleToggle: (action: ControlAction) => void,
@@ -21,6 +22,7 @@ export default ({
   isValidTab,
   shouldInfoDisplay,
   shouldEditDisplay,
+  handleSave,
   recStatus,
   action,
   handleToggle,
@@ -28,7 +30,7 @@ export default ({
 }: FooterProps) => (
     <div id="footer">
       <ToggleButton recStatus={recStatus} handleToggle={handleToggle} isValidTab={isValidTab} shouldInfoDisplay={shouldInfoDisplay} shouldEditDisplay={shouldEditDisplay} />
-      {(recStatus === RecState.PAUSED || (shouldEditDisplay && action === ControlAction.EDIT)) && <SaveButton handleToggle={handleToggle} />}
+      {(recStatus === RecState.PAUSED || (shouldEditDisplay && action === ControlAction.EDIT)) && <SaveButton handleSave={handleSave} />}
       {action === ControlAction.EDIT && shouldEditDisplay && <CloneButton handleToggle={handleToggle}/>}
       {recStatus === RecState.PAUSED && <ResetButton handleToggle={handleToggle} />}
       {recStatus !== RecState.PAUSED && !shouldInfoDisplay && !shouldEditDisplay && <RunAllButton copyToClipboard={copyToClipboard}  />}

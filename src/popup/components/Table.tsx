@@ -5,11 +5,12 @@ import { Recording } from '../../types';
 export interface TableProps {
     recordings: Recording[],
     toggleInfoDisplay: () => void,
+    handleDelete: (id: any) => void,
     toggleEditDisplay: (test: any) => void,
     setAction: (action: ControlAction) => void
 }
 
-export default ({ toggleInfoDisplay, toggleEditDisplay, setAction, recordings }: TableProps) => {
+export default ({ toggleInfoDisplay, toggleEditDisplay, handleDelete, setAction, recordings }: TableProps) => {
     const handleRowClick = (id): void => {
         toggleInfoDisplay();
     };
@@ -28,7 +29,7 @@ export default ({ toggleInfoDisplay, toggleEditDisplay, setAction, recordings }:
             <td className="td-center-align">
                 <i className="fa fa-pencil margin-right" onClick={() => handleEdit(recording.id)} aria-hidden="true"></i>
                 <i className="fa fa-play-circle margin-right" aria-hidden="true"></i>
-                <i className="fa fa-trash" aria-hidden="true"></i>
+                <i className="fa fa-trash" aria-hidden="true" onClick={() => handleDelete(recording.id)}></i>
             </td>
         </tr>)
     };

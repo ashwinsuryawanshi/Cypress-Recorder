@@ -1,17 +1,16 @@
 import * as React from 'react';
-import { ControlAction } from '../../constants';
 
 export interface SaveButtonProps {
-    handleToggle: (action: ControlAction) => void,
+    handleSave: () => void,
 }
 
-export default ({ handleToggle }: SaveButtonProps) => (
+export default ({ handleSave }: SaveButtonProps) => (
     <div id="save-wrap">
         <button
             type="button"
             id="save"
             className="button"
-            onClick={() => handleToggle(ControlAction.SAVE)}
+            onClick={() => handleSave()}
         >
             Save
     </button>
