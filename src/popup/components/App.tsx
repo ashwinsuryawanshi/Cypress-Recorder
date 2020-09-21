@@ -3,15 +3,25 @@ import Header from './Header';
 import Info from './Info';
 import Footer from './Footer';
 import Body from './Body';
-import { Block, ActionWithPayload } from '../../types';
-import { ControlAction, RecState } from '../../constants';
+import {ActionWithPayload, Block} from '../../types';
+import {ControlAction, RecState} from '../../constants';
 import '../../assets/styles/styles.scss';
+import EditTest from "./EditTest";
 
 export default () => {
   const [recStatus, setRecStatus] = React.useState<RecState>(RecState.OFF);
+  const [action, setAction] = React.useState<ControlAction>(ControlAction.STOP_EDIT);
   const [codeBlocks, setCodeBlocks] = React.useState<Block[]>([]);
   const [shouldInfoDisplay, setShouldInfoDisplay] = React.useState<boolean>(false);
+  const [shouldEditDisplay, setShouldEditDisplay] = React.useState<boolean>(false);
+  const [editedTest, setEditedTest] = React.useState<ControlAction>(null);
   const [isValidTab, setIsValidTab] = React.useState<boolean>(true);
+
+  let tableRows = [
+    {"id": "1", "project": "Prisma", "module": "Campaign Buy", "case": "Create Placement"},
+    {"id": "2", "project": "Prisma", "module": "Campaign Buy", "case": "Create Package"},
+    {"id": "3", "project": "Prisma", "module": "Campaign Orders", "case": "Create Order"}
+  ];
 
   const startRecording = (): void => {
     setRecStatus(RecState.ON);
@@ -22,6 +32,14 @@ export default () => {
   const resetRecording = (): void => {
     setRecStatus(RecState.OFF);
     setCodeBlocks([]);
+  };
+
+  const startEditing = (): void => {
+    setAction(ControlAction.EDIT);
+  };
+
+  const stopEditing = (): void => {
+    setAction(ControlAction.STOP_EDIT);
   };
 
   React.useEffect((): void => {
@@ -45,6 +63,8 @@ export default () => {
       if (type === ControlAction.START && isValidTab) startRecording();
       else if (type === ControlAction.STOP) stopRecording();
       else if (type === ControlAction.RESET) resetRecording();
+      else if (type === ControlAction.EDIT) startEditing();
+      else if (type === ControlAction.STOP_EDIT) stopEditing();
       else if (type === ControlAction.PUSH) setCodeBlocks(blocks => [...blocks, payload]);
     }
     if (chrome.runtime && chrome.runtime.onMessage) {
@@ -54,6 +74,10 @@ export default () => {
       chrome.runtime.onMessage.removeListener(handleMessageFromBackground);
     };
   }, []);
+
+  React.useEffect((): void =>{
+    setAction(ControlAction.STOP_EDIT);
+  }, [recStatus, setAction]);
 
   const handleToggle = (action: ControlAction): void => {
     if (shouldInfoDisplay) setShouldInfoDisplay(false);
@@ -65,6 +89,11 @@ export default () => {
 
   const toggleInfoDisplay = (): void => {
     setShouldInfoDisplay(should => !should);
+  };
+
+  const toggleEditDisplay = (test: any): void => {
+    setShouldEditDisplay(should => !should);
+    setEditedTest(test);
   };
 
   const copyToClipboard = async (): Promise<void> => {
@@ -100,26 +129,27 @@ export default () => {
 
   return (
     <div id="App">
-      <Header shouldInfoDisplay={shouldInfoDisplay} toggleInfoDisplay={toggleInfoDisplay} />
-      {
-        (shouldInfoDisplay
-          ? <Info />
-          : (
-            <Body
-              codeBlocks={codeBlocks}
-              recStatus={recStatus}
-              isValidTab={isValidTab}
-              destroyBlock={destroyBlock}
-              moveBlock={moveBlock}
-              toggleInfoDisplay={toggleInfoDisplay}
-            />
-          )
-        )
-      }
+      <Header shouldInfoDisplay={shouldInfoDisplay} toggleInfoDisplay={toggleInfoDisplay}/>
+      {shouldInfoDisplay && <Info/>}
+      {shouldEditDisplay && <EditTest test={editedTest}/>}
+      {!shouldEditDisplay && !shouldInfoDisplay && <Body
+          codeBlocks={codeBlocks}
+          recStatus={recStatus}
+          action={action}
+          setAction={setAction}
+          tableRows={tableRows}
+          isValidTab={isValidTab}
+          destroyBlock={destroyBlock}
+          moveBlock={moveBlock}
+          toggleInfoDisplay={toggleInfoDisplay}
+          toggleEditDisplay={toggleEditDisplay}
+      />}
       <Footer
         isValidTab={isValidTab}
         shouldInfoDisplay={shouldInfoDisplay}
+        shouldEditDisplay={shouldEditDisplay}
         recStatus={recStatus}
+        action={action}
         handleToggle={handleToggle}
         copyToClipboard={copyToClipboard}
       />

@@ -3,12 +3,13 @@ import { ControlAction, RecState } from '../../constants';
 
 export interface ToggleButtonProps {
   isValidTab: boolean,
-  shouldInfoDisplay: boolean
+  shouldInfoDisplay: boolean,
+  shouldEditDisplay: boolean,
   recStatus: RecState,
   handleToggle: (action: ControlAction) => void,
 }
 
-export default ({ recStatus, handleToggle, isValidTab, shouldInfoDisplay }: ToggleButtonProps) => {
+export default ({ recStatus, handleToggle, isValidTab, shouldInfoDisplay, shouldEditDisplay }: ToggleButtonProps) => {
   const handleClick = (): void => {
     let action: ControlAction;
     if ((recStatus === RecState.OFF || recStatus === RecState.PAUSED) && !shouldInfoDisplay) action = ControlAction.START;

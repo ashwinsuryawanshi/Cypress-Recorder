@@ -1,14 +1,37 @@
 import * as React from 'react';
+import {ControlAction} from "../../constants";
 
 export interface TableProps {
     toggleInfoDisplay: () => void,
-    //   shouldInfoDisplay: boolean,
+    toggleEditDisplay: (test: any) => void,
+    setAction: (action: ControlAction) => void,
+    tableRows: any
 }
 
-export default ({ toggleInfoDisplay }: TableProps) => {
+export default ({ toggleInfoDisplay, toggleEditDisplay, setAction, tableRows }: TableProps) => {
     const handleRowClick = (id): void => {
         toggleInfoDisplay();
     };
+
+    const handleEdit = (id): void => {
+        setAction(ControlAction.EDIT);
+        const test = tableRows[id];
+        toggleEditDisplay(test);
+    };
+
+    const trs = tableRows.map(function (row: any) {
+        return (<tr className="highlight-row">
+            <td onClick={handleRowClick}>{row.project}</td>
+            <td onClick={handleRowClick}>{row.module}</td>
+            <td onClick={handleRowClick}>{row.case}</td>
+            <td className="td-center-align">
+                <i className="fa fa-pencil margin-right" onClick={() => handleEdit(row.id)} aria-hidden="true"></i>
+                <i className="fa fa-play-circle margin-right" aria-hidden="true"></i>
+                <i className="fa fa-trash" aria-hidden="true"></i>
+            </td>
+        </tr>)
+    });
+
     return (
         <>
             {/*<button type="button" className="button" onClick={handleClick}>*/}
@@ -24,36 +47,7 @@ export default ({ toggleInfoDisplay }: TableProps) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="highlight-row">
-                        <td onClick={handleRowClick}>Prisma</td>
-                        <td onClick={handleRowClick}>Campaign Buy</td>
-                        <td onClick={handleRowClick}>Create Placement</td>
-                        <td className="td-center-align">
-                            <i className="fa fa-pencil margin-right" aria-hidden="true"></i>
-                            <i className="fa fa-play-circle margin-right" aria-hidden="true"></i>
-                            <i className="fa fa-trash" aria-hidden="true"></i>
-                        </td>
-                    </tr>
-                    <tr className="highlight-row">
-                        <td onClick={handleRowClick}>Prisma</td>
-                        <td onClick={handleRowClick}>Campaign Buy</td>
-                        <td onClick={handleRowClick}>Create Package</td>
-                        <td className="td-center-align">
-                            <i className="fa fa-pencil margin-right" aria-hidden="true"></i>
-                            <i className="fa fa-play-circle margin-right" aria-hidden="true"></i>
-                            <i className="fa fa-trash" aria-hidden="true"></i>
-                        </td>
-                    </tr>
-                    <tr className="highlight-row">
-                        <td onClick={handleRowClick}>Prisma</td>
-                        <td onClick={handleRowClick}>Campaign Order</td>
-                        <td onClick={handleRowClick}>Create Order</td>
-                        <td className="td-center-align">
-                            <i className="fa fa-pencil margin-right" aria-hidden="true"></i>
-                            <i className="fa fa-play-circle margin-right" aria-hidden="true"></i>
-                            <i className="fa fa-trash" aria-hidden="true"></i>
-                        </td>
-                    </tr>
+                  {trs}
                 </tbody>
             </table>
         </>
