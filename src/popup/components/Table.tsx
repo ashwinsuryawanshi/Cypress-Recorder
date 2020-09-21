@@ -6,18 +6,17 @@ export interface TableProps {
     recordings: Recording[],
     toggleInfoDisplay: () => void,
     toggleEditDisplay: (test: any) => void,
-    setAction: (action: ControlAction) => void,
-    tableRows: any
+    setAction: (action: ControlAction) => void
 }
 
-export default ({ toggleInfoDisplay, toggleEditDisplay, setAction, tableRows, recordings }: TableProps) => {
+export default ({ toggleInfoDisplay, toggleEditDisplay, setAction, recordings }: TableProps) => {
     const handleRowClick = (id): void => {
         toggleInfoDisplay();
     };
 
     const handleEdit = (id): void => {
         setAction(ControlAction.EDIT);
-        const test = tableRows[id];
+        const test = recordings[id];
         toggleEditDisplay(test);
     };
 
@@ -33,7 +32,7 @@ export default ({ toggleInfoDisplay, toggleEditDisplay, setAction, tableRows, re
             </td>
         </tr>)
     };
-    
+
     return (
         <table id="tests-recorder">
             <thead>
