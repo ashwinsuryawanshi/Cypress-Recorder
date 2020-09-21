@@ -24,25 +24,7 @@ export default () => {
     testScript: ''
   };
 
-  const [recordings, setRecordings] = React.useState([{
-        id: 0,
-        projectName: 'Prisma',
-        testSuiteName: ' Campaign Buy',
-        testCaseName: 'Create Placement',
-        testScript: ''
-    },{
-        id: 1,
-        projectName: 'Prisma',
-        testSuiteName: ' Campaign Buy',
-        testCaseName: 'Create Package',
-        testScript: ''
-    },{
-        id: 2,
-        projectName: 'Prisma',
-        testSuiteName: ' Campaign Order',
-        testCaseName: 'Create Order',
-        testScript: ''
-    }]);
+  const [recordings, setRecordings] = React.useState([]);
 
   const startRecording = (): void => {
     setRecStatus(RecState.ON);
@@ -65,7 +47,8 @@ export default () => {
 
   React.useEffect((): void => {
     if (chrome.storage) {
-      chrome.storage.local.get(['status', 'codeBlocks'], result => {
+      chrome.storage.local.get(['status', 'codeBlocks', 'recordings'], result => {
+        if (result.recordings) setRecordings(result.recordings);
         if (result.codeBlocks) setCodeBlocks(result.codeBlocks);
         if (result.status === RecState.ON) setRecStatus(RecState.ON);
         else if (result.status === RecState.PAUSED) setRecStatus(RecState.PAUSED);
@@ -77,6 +60,12 @@ export default () => {
       });
     }
   }, []);
+
+  React.useEffect((): void => {
+    if (chrome.storage) {
+      chrome.storage.local.set({ recordings: recordings });
+    }
+  }, [recordings]);
 
   React.useEffect((): () => void => {
     function handleMessageFromBackground({ type, payload }: ActionWithPayload): void {
