@@ -13,6 +13,11 @@ body {
   color: $primary-color;
   background-color: $primary-background-color;
   overscroll-behavior-y: none;
+
+  & #test-name {
+    height: 20px;
+    width: 500px;
+  }
 }
 
 * {
@@ -68,6 +73,15 @@ body {
   flex-grow: 1;
   padding: 20px;
   overflow: auto;
+
+  & #testName-wrap {
+    margin-bottom: 40px;
+
+    & #test-name {
+      height: 20px;
+      width: 500px;
+    }
+  }
 }
 
 #footer {
@@ -90,6 +104,12 @@ body {
     justify-content: flex-start;
   }
   
+  & #clone-wrap {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+  }
+
   & #save-wrap {
     display: flex;
     justify-content: flex-start;

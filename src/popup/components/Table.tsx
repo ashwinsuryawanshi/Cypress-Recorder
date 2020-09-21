@@ -1,11 +1,24 @@
 import * as React from 'react';
+import { ControlAction } from "../../constants";
 import { Recording } from '../../types';
 
-export interface TableProps { toggleInfoDisplay: () => void, recordings: Recording[] }
+export interface TableProps {
+    recordings: Recording[],
+    toggleInfoDisplay: () => void,
+    toggleEditDisplay: (test: any) => void,
+    setAction: (action: ControlAction) => void,
+    tableRows: any
+}
 
-export default ({ toggleInfoDisplay, recordings }: TableProps) => {
+export default ({ toggleInfoDisplay, toggleEditDisplay, setAction, tableRows, recordings }: TableProps) => {
     const handleRowClick = (id): void => {
         toggleInfoDisplay();
+    };
+
+    const handleEdit = (id): void => {
+        setAction(ControlAction.EDIT);
+        const test = tableRows[id];
+        toggleEditDisplay(test);
     };
 
     const getTableRow = (recording, index) => {
@@ -14,7 +27,7 @@ export default ({ toggleInfoDisplay, recordings }: TableProps) => {
             <td onClick={handleRowClick}>{recording.testSuiteName}</td>
             <td onClick={handleRowClick}>{recording.testCaseName}</td>
             <td className="td-center-align">
-                <i className="fa fa-pencil margin-right" aria-hidden="true"></i>
+                <i className="fa fa-pencil margin-right" onClick={() => handleEdit(recording.id)} aria-hidden="true"></i>
                 <i className="fa fa-play-circle margin-right" aria-hidden="true"></i>
                 <i className="fa fa-trash" aria-hidden="true"></i>
             </td>

@@ -1,32 +1,39 @@
 import * as React from 'react';
 import { Block, Recording } from '../../types';
-import { RecState } from '../../constants';
+import { RecState, ControlAction } from '../../constants';
 
 import CodeDisplay from './CodeDisplay';
 import LandingBox from './LandingBox';
 import Table from './Table';
+import TestName from "./TestName";
 
 export interface BodyProps {
   isValidTab: boolean,
   recStatus: RecState,
   recordings: Recording[],
+  action: ControlAction,
+  setAction: (action: ControlAction) => void,
   codeBlocks: Block[],
   destroyBlock: (index: number) => void,
   moveBlock: (dragIdx: number, dropIdx: number) => void,
   toggleInfoDisplay: () => void,
-  }
+  toggleEditDisplay: (test: any) => void
+}
 
 export default ({
   recStatus,
   recordings,
+  setAction,
   codeBlocks,
   isValidTab,
   destroyBlock,
   moveBlock,
-  toggleInfoDisplay
+  toggleInfoDisplay,
+  toggleEditDisplay
 }: BodyProps) => (
     <div id="body">
-      {recStatus === RecState.OFF && <Table recordings={recordings} toggleInfoDisplay={toggleInfoDisplay} />}
+      {recStatus === RecState.OFF && <Table toggleInfoDisplay={toggleInfoDisplay} toggleEditDisplay={toggleEditDisplay} setAction={setAction} recordings={recordings}/>}
+      {recStatus !== RecState.OFF && <TestName testName={null} editable={true}/>}
       <div>
         {recStatus === RecState.OFF && <LandingBox isValidTab={isValidTab} />}
         {recStatus !== RecState.OFF && <CodeDisplay codeBlocks={codeBlocks} destroyBlock={destroyBlock} moveBlock={moveBlock} />}

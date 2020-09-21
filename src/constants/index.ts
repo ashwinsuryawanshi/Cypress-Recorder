@@ -16,7 +16,10 @@ export enum ControlAction {
   PUSH,
   VIEW,
   RUN,
-  RUNALL
+  RUN_ALL,
+  EDIT,
+  STOP_EDIT,
+  CLONE
 }
 
 export enum RecState {

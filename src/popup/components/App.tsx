@@ -3,34 +3,38 @@ import Header from './Header';
 import Info from './Info';
 import Footer from './Footer';
 import Body from './Body';
-import { Block, ActionWithPayload } from '../../types';
-import { ControlAction, RecState } from '../../constants';
+import {ActionWithPayload, Block} from '../../types';
+import {ControlAction, RecState} from '../../constants';
 import '../../assets/styles/styles.scss';
+import EditTest from "./EditTest";
 
 export default () => {
   const [recStatus, setRecStatus] = React.useState<RecState>(RecState.OFF);
+  const [action, setAction] = React.useState<ControlAction>(ControlAction.STOP_EDIT);
   const [codeBlocks, setCodeBlocks] = React.useState<Block[]>([]);
   const [shouldInfoDisplay, setShouldInfoDisplay] = React.useState<boolean>(false);
+  const [shouldEditDisplay, setShouldEditDisplay] = React.useState<boolean>(false);
+  const [editedTest, setEditedTest] = React.useState<ControlAction>(null);
   const [isValidTab, setIsValidTab] = React.useState<boolean>(true);
   const [recordings, setRecordings] = React.useState([{
-    id: 0,
-    projectName: 'Prisma',
-    testSuiteName: ' Campaign Buy',
-    testCaseName: 'Create Placement',
-    testScript: ''
-},{
-    id: 1,
-    projectName: 'Prisma',
-    testSuiteName: ' Campaign Buy',
-    testCaseName: 'Create Package',
-    testScript: ''
-},{
-    id: 2,
-    projectName: 'Prisma',
-    testSuiteName: ' Campaign Order',
-    testCaseName: 'Create Order',
-    testScript: ''
-}]);
+        id: 0,
+        projectName: 'Prisma',
+        testSuiteName: ' Campaign Buy',
+        testCaseName: 'Create Placement',
+        testScript: ''
+    },{
+        id: 1,
+        projectName: 'Prisma',
+        testSuiteName: ' Campaign Buy',
+        testCaseName: 'Create Package',
+        testScript: ''
+    },{
+        id: 2,
+        projectName: 'Prisma',
+        testSuiteName: ' Campaign Order',
+        testCaseName: 'Create Order',
+        testScript: ''
+    }]);
 
   const startRecording = (): void => {
     setRecStatus(RecState.ON);
@@ -41,6 +45,14 @@ export default () => {
   const resetRecording = (): void => {
     setRecStatus(RecState.OFF);
     setCodeBlocks([]);
+  };
+
+  const startEditing = (): void => {
+    setAction(ControlAction.EDIT);
+  };
+
+  const stopEditing = (): void => {
+    setAction(ControlAction.STOP_EDIT);
   };
 
   React.useEffect((): void => {
@@ -64,6 +76,8 @@ export default () => {
       if (type === ControlAction.START && isValidTab) startRecording();
       else if (type === ControlAction.STOP) stopRecording();
       else if (type === ControlAction.RESET) resetRecording();
+      else if (type === ControlAction.EDIT) startEditing();
+      else if (type === ControlAction.STOP_EDIT) stopEditing();
       else if (type === ControlAction.PUSH) setCodeBlocks(blocks => [...blocks, payload]);
     }
     if (chrome.runtime && chrome.runtime.onMessage) {
@@ -74,8 +88,13 @@ export default () => {
     };
   }, []);
 
+  React.useEffect((): void =>{
+    setAction(ControlAction.STOP_EDIT);
+  }, [recStatus, setAction]);
+
   const handleToggle = (action: ControlAction): void => {
     if (shouldInfoDisplay) setShouldInfoDisplay(false);
+    else if (shouldEditDisplay) setShouldEditDisplay(false);
     if (action === ControlAction.START) startRecording();
     else if (action === ControlAction.STOP) stopRecording();
     else if (action === ControlAction.RESET) resetRecording();
@@ -84,6 +103,11 @@ export default () => {
 
   const toggleInfoDisplay = (): void => {
     setShouldInfoDisplay(should => !should);
+  };
+
+  const toggleEditDisplay = (test: any): void => {
+    setShouldEditDisplay(should => !should);
+    setEditedTest(test);
   };
 
   const copyToClipboard = async (): Promise<void> => {
@@ -119,27 +143,27 @@ export default () => {
 
   return (
     <div id="App">
-      <Header shouldInfoDisplay={shouldInfoDisplay} toggleInfoDisplay={toggleInfoDisplay} />
-      {
-        (shouldInfoDisplay
-          ? <Info />
-          : (
-            <Body
-              codeBlocks={codeBlocks}
-              recStatus={recStatus}
-              recordings={recordings}
-              isValidTab={isValidTab}
-              destroyBlock={destroyBlock}
-              moveBlock={moveBlock}
-              toggleInfoDisplay={toggleInfoDisplay}
-            />
-          )
-        )
-      }
+      <Header shouldInfoDisplay={shouldInfoDisplay} toggleInfoDisplay={toggleInfoDisplay}/>
+      {shouldInfoDisplay && <Info/>}
+      {shouldEditDisplay && <EditTest test={editedTest}/>}
+      {!shouldEditDisplay && !shouldInfoDisplay && <Body
+          codeBlocks={codeBlocks}
+          recStatus={recStatus}
+          recordings={recordings}
+          action={action}
+          setAction={setAction}
+          isValidTab={isValidTab}
+          destroyBlock={destroyBlock}
+          moveBlock={moveBlock}
+          toggleInfoDisplay={toggleInfoDisplay}
+          toggleEditDisplay={toggleEditDisplay}
+      />}
       <Footer
         isValidTab={isValidTab}
         shouldInfoDisplay={shouldInfoDisplay}
+        shouldEditDisplay={shouldEditDisplay}
         recStatus={recStatus}
+        action={action}
         handleToggle={handleToggle}
         copyToClipboard={copyToClipboard}
       />
