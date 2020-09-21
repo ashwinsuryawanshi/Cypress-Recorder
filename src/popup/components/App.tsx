@@ -81,6 +81,7 @@ export default () => {
 
   const handleToggle = (action: ControlAction): void => {
     if (shouldInfoDisplay) setShouldInfoDisplay(false);
+    else if (shouldEditDisplay) setShouldEditDisplay(false);
     if (action === ControlAction.START) startRecording();
     else if (action === ControlAction.STOP) stopRecording();
     else if (action === ControlAction.RESET) resetRecording();

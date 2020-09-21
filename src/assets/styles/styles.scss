@@ -103,13 +103,14 @@ body {
     display: flex;
     justify-content: flex-start;
   }
-
-  & #save-wrap {
+  
+  & #clone-wrap {
+    flex: 1;
     display: flex;
     justify-content: flex-start;
   }
 
-  & #clone-wrap {
+  & #save-wrap {
     display: flex;
     justify-content: flex-start;
   }

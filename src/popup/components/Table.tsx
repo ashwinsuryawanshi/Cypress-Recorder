@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ControlAction} from "../../constants";
+import { ControlAction } from "../../constants";
 
 export interface TableProps {
     toggleInfoDisplay: () => void,
@@ -20,7 +20,7 @@ export default ({ toggleInfoDisplay, toggleEditDisplay, setAction, tableRows }: 
     };
 
     const trs = tableRows.map(function (row: any) {
-        return (<tr className="highlight-row">
+        return (<tr className="highlight-row" key={row.id}>
             <td onClick={handleRowClick}>{row.project}</td>
             <td onClick={handleRowClick}>{row.module}</td>
             <td onClick={handleRowClick}>{row.case}</td>
@@ -47,7 +47,7 @@ export default ({ toggleInfoDisplay, toggleEditDisplay, setAction, tableRows }: 
                     </tr>
                 </thead>
                 <tbody>
-                  {trs}
+                    {trs}
                 </tbody>
             </table>
         </>
