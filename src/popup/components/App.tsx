@@ -12,6 +12,25 @@ export default () => {
   const [codeBlocks, setCodeBlocks] = React.useState<Block[]>([]);
   const [shouldInfoDisplay, setShouldInfoDisplay] = React.useState<boolean>(false);
   const [isValidTab, setIsValidTab] = React.useState<boolean>(true);
+  const [recordings, setRecordings] = React.useState([{
+    id: 0,
+    projectName: 'Prisma',
+    testSuiteName: ' Campaign Buy',
+    testCaseName: 'Create Placement',
+    testScript: ''
+},{
+    id: 1,
+    projectName: 'Prisma',
+    testSuiteName: ' Campaign Buy',
+    testCaseName: 'Create Package',
+    testScript: ''
+},{
+    id: 2,
+    projectName: 'Prisma',
+    testSuiteName: ' Campaign Order',
+    testCaseName: 'Create Order',
+    testScript: ''
+}]);
 
   const startRecording = (): void => {
     setRecStatus(RecState.ON);
@@ -108,6 +127,7 @@ export default () => {
             <Body
               codeBlocks={codeBlocks}
               recStatus={recStatus}
+              recordings={recordings}
               isValidTab={isValidTab}
               destroyBlock={destroyBlock}
               moveBlock={moveBlock}

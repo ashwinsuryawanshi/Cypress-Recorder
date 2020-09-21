@@ -27,3 +27,11 @@ export interface Block {
   value: string,
   id: string,
 }
+
+export interface Recording {
+  id: number,
+  projectName: string,
+  testSuiteName: string,
+  testCaseName: string,
+  testScript:string,
+}
