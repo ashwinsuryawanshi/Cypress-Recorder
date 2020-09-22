@@ -122,6 +122,7 @@ export default () => {
 
   const getCodeBlocksFromString = (codeAsString: String): Block[] => {
     let codeLinesList = codeAsString.split('\n');
+    codeLinesList.pop();
     let codeAsBlocks = [];
     codeLinesList.forEach(function (line, index) {
       let block = {id: '', value: ''};
