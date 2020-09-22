@@ -112,23 +112,22 @@ export default () => {
   const handleSave = (): void => {
     handleToggle(ControlAction.SAVE);
     setShouldEditDisplay(false);
-    let currentTestRecord;
+    let currentTestRecord, recordingsCopy = [...recordings];
     if(editedTest && shouldEditDisplay) {
       currentTestRecord = recordings.filter(function (record) {
         return record.id === editedTest.id;
       })[0];
       currentTestRecord.testCaseName = (document.getElementById('test-name') as HTMLInputElement).value;
       setEditedTest(null);
-      recordings[editedTest.id] = currentTestRecord;
+      recordingsCopy[editedTest.id] = currentTestRecord;
     } else {
       currentTestRecord = Object.create(TEST_RECORD);
       currentTestRecord.id = recordings.length;
       currentTestRecord.testCaseName = (document.getElementById('test-name') as HTMLInputElement).value;
       currentTestRecord.projectName = 'Prisma';
       currentTestRecord.testSuiteName = ' Campaign Buy';
-      recordings.push(currentTestRecord);
     }
-    setRecordings(recordings);
+    setRecordings([...recordingsCopy, currentTestRecord]);
     resetRecording();
   };
 
