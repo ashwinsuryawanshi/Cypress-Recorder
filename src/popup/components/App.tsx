@@ -144,8 +144,10 @@ export default () => {
         return record.id === editedTest.id;
       })[0];
       currentTestRecord.testCaseName = (document.getElementById('test-name') as HTMLInputElement).value;
+      currentTestRecord.testScript = getCodeBlocksAsString();
       setEditedTest(null);
       recordingsCopy[editedTest.id] = currentTestRecord;
+      setRecordings([...recordingsCopy]);
     } else {
       currentTestRecord = Object.create(TEST_RECORD);
       currentTestRecord.id = recordings.length;
@@ -153,8 +155,8 @@ export default () => {
       currentTestRecord.projectName = 'Prisma';
       currentTestRecord.testSuiteName = ' Campaign Buy';
       currentTestRecord.testScript = getCodeBlocksAsString();
+      setRecordings([...recordingsCopy, currentTestRecord]);
     }
-    setRecordings([...recordingsCopy, currentTestRecord]);
     resetRecording();
   };
 
