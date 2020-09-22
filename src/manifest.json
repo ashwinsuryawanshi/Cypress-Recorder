@@ -1,6 +1,6 @@
 {
-  "name": "Gannyantra",
-  "short_name": "Gannyantra",
+  "name": "Spree",
+  "short_name": "Spree",
   "version": "1.0.0",
   "description": "Records a user session and generates code for automation and testing purposes.",
   "manifest_version": 2,

@@ -1,5 +1,5 @@
 {
-  "name": "cypress-recorder",
+  "name": "spree",
   "version": "1.0.4",
   "description": "Records a user session and generates cypress code for automation and testing purposes.",
   "main": "index.js",

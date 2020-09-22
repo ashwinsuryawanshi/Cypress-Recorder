@@ -136,7 +136,7 @@ export default () => {
   };
 
   const handleSave = (): void => {
-    handleToggle(ControlAction.SAVE);
+    handleToggle(ControlAction.RESET);
     setShouldEditDisplay(false);
     let currentTestRecord, recordingsCopy = [...recordings];
     if(editedTest && shouldEditDisplay) {

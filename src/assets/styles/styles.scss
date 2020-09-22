@@ -265,14 +265,14 @@ mark {
 }
 
 .disabled-button {
-  background-color: rgb(106, 174, 143);
-  border: 1px solid $pale-green;
+  background-color: #cccccc;
+  border: 1px solid #999999;
   margin: 10px;
   padding: 15px;
   border-radius: 4px;
   font-size: 16px;
   font-weight: 400;
-  color: $pale-green;
+  color: #666666;
   line-height: 8px;
 }
 

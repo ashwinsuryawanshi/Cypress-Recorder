@@ -1,4 +1,4 @@
-# Contributing to Cypress Recorder:
+# Contributing to Spree:
 +1tada First off, thanks for taking the time to contribute! tada+1
 
 1. Fork and clone this repository.
