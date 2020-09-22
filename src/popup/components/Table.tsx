@@ -12,13 +12,17 @@ export interface TableProps {
 
 export default ({ toggleInfoDisplay, toggleEditDisplay, handleDelete, setAction, recordings }: TableProps) => {
     const handleRowClick = (id): void => {
-        const test = recordings[id];
+        const test = recordings.find(function (record) {
+            return record.id === id;
+          });
         toggleInfoDisplay(test);
     };
 
     const handleEdit = (id): void => {
         setAction(ControlAction.EDIT);
-        const test = recordings[id];
+        const test = recordings.find(function (record) {
+            return record.id === id;
+          });
         toggleEditDisplay(test);
     };
 

@@ -150,7 +150,7 @@ export default () => {
       setRecordings([...recordingsCopy]);
     } else {
       currentTestRecord = Object.create(TEST_RECORD);
-      currentTestRecord.id = recordings.length;
+      currentTestRecord.id = (document.getElementById('test-name') as HTMLInputElement).value;
       currentTestRecord.testCaseName = (document.getElementById('test-name') as HTMLInputElement).value;
       currentTestRecord.projectName = 'Prisma';
       currentTestRecord.testSuiteName = ' Campaign Buy';
