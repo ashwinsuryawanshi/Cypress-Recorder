@@ -15,6 +15,7 @@ export default () => {
   const [shouldInfoDisplay, setShouldInfoDisplay] = React.useState<boolean>(false);
   const [shouldEditDisplay, setShouldEditDisplay] = React.useState<boolean>(false);
   const [editedTest, setEditedTest] = React.useState<any>(null);
+  const [viewTest, setViewTest] = React.useState<any>(null);
   const [isValidTab, setIsValidTab] = React.useState<boolean>(true);
   let TEST_RECORD = {
     id: 999,
@@ -100,13 +101,37 @@ export default () => {
     }
   };
 
-  const toggleInfoDisplay = (): void => {
+  const toggleInfoDisplay = (test: any): void => {
     setShouldInfoDisplay(should => !should);
+    setViewTest(test)
   };
 
   const toggleEditDisplay = (test: any): void => {
     setShouldEditDisplay(should => !should);
     setEditedTest(test);
+    setCodeBlocks(getCodeBlocksFromString(test.testScript))
+  };
+
+  const getCodeBlocksAsString = (): String => {
+    let codeAsString: string = '';
+    for (let i = 0; i !== codeBlocks.length; i += 1) {
+      codeAsString += codeBlocks[i].value.concat('\n');
+    }
+    return codeAsString;
+  };
+
+  const getCodeBlocksFromString = (codeAsString: String): Block[] => {
+    let codeLinesList = codeAsString.split('\n');
+    let codeAsBlocks = [];
+    codeLinesList.forEach(function (line, index) {
+      let block = {id: '', value: ''};
+      block.id = index.toString();
+      block.value = line;
+      codeAsBlocks.push(block);
+    });
+    setCodeBlocks(codeAsBlocks);
+
+    return codeAsBlocks;
   };
 
   const handleSave = (): void => {
@@ -126,6 +151,7 @@ export default () => {
       currentTestRecord.testCaseName = (document.getElementById('test-name') as HTMLInputElement).value;
       currentTestRecord.projectName = 'Prisma';
       currentTestRecord.testSuiteName = ' Campaign Buy';
+      currentTestRecord.testScript = getCodeBlocksAsString();
     }
     setRecordings([...recordingsCopy, currentTestRecord]);
     resetRecording();
@@ -171,33 +197,33 @@ export default () => {
   };
 
   return (
-    <div id="App">
-      <Header shouldInfoDisplay={shouldInfoDisplay} toggleInfoDisplay={toggleInfoDisplay}/>
-      {shouldInfoDisplay && <Info/>}
-      {shouldEditDisplay && <EditTest test={editedTest}/>}
-      {!shouldEditDisplay && !shouldInfoDisplay && <Body
-          codeBlocks={codeBlocks}
-          recStatus={recStatus}
-          recordings={recordings}
-          action={action}
-          setAction={setAction}
-          handleDelete={handleDelete}
-          isValidTab={isValidTab}
-          destroyBlock={destroyBlock}
-          moveBlock={moveBlock}
-          toggleInfoDisplay={toggleInfoDisplay}
-          toggleEditDisplay={toggleEditDisplay}
-      />}
-      <Footer
-        isValidTab={isValidTab}
-        shouldInfoDisplay={shouldInfoDisplay}
-        shouldEditDisplay={shouldEditDisplay}
-        handleSave={handleSave}
-        recStatus={recStatus}
-        action={action}
-        handleToggle={handleToggle}
-        copyToClipboard={copyToClipboard}
-      />
-    </div>
+      <div id="App">
+        <Header shouldInfoDisplay={shouldInfoDisplay} toggleInfoDisplay={toggleInfoDisplay}/>
+        {shouldInfoDisplay && <Info testInfo={viewTest}/>}
+        {shouldEditDisplay && <EditTest test={editedTest} codeBlocks={codeBlocks} destroyBlock={destroyBlock} moveBlock={moveBlock}/>}
+        {!shouldEditDisplay && !shouldInfoDisplay && <Body
+            codeBlocks={codeBlocks}
+            recStatus={recStatus}
+            recordings={recordings}
+            action={action}
+            setAction={setAction}
+            handleDelete={handleDelete}
+            isValidTab={isValidTab}
+            destroyBlock={destroyBlock}
+            moveBlock={moveBlock}
+            toggleInfoDisplay={toggleInfoDisplay}
+            toggleEditDisplay={toggleEditDisplay}
+        />}
+        <Footer
+            isValidTab={isValidTab}
+            shouldInfoDisplay={shouldInfoDisplay}
+            shouldEditDisplay={shouldEditDisplay}
+            handleSave={handleSave}
+            recStatus={recStatus}
+            action={action}
+            handleToggle={handleToggle}
+            copyToClipboard={copyToClipboard}
+        />
+      </div>
   );
 };

@@ -2,7 +2,7 @@ import * as React from 'react';
 import InfoButton from './InfoButton';
 
 export interface HeaderProps {
-  toggleInfoDisplay: () => void,
+  toggleInfoDisplay: (test: any) => void,
   shouldInfoDisplay: boolean,
 }
 

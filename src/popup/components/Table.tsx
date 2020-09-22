@@ -4,7 +4,7 @@ import { Recording } from '../../types';
 
 export interface TableProps {
     recordings: Recording[],
-    toggleInfoDisplay: () => void,
+    toggleInfoDisplay: (test: any) => void,
     handleDelete: (id: any) => void,
     toggleEditDisplay: (test: any) => void,
     setAction: (action: ControlAction) => void
@@ -12,7 +12,8 @@ export interface TableProps {
 
 export default ({ toggleInfoDisplay, toggleEditDisplay, handleDelete, setAction, recordings }: TableProps) => {
     const handleRowClick = (id): void => {
-        toggleInfoDisplay();
+        const test = recordings[id];
+        toggleInfoDisplay(test);
     };
 
     const handleEdit = (id): void => {
@@ -23,9 +24,9 @@ export default ({ toggleInfoDisplay, toggleEditDisplay, handleDelete, setAction,
 
     const getTableRow = (recording, index) => {
         return (<tr key={index} className="highlight-row">
-            <td onClick={handleRowClick}>{recording.projectName}</td>
-            <td onClick={handleRowClick}>{recording.testSuiteName}</td>
-            <td onClick={handleRowClick}>{recording.testCaseName}</td>
+            <td onClick={() => handleRowClick(recording.id)}>{recording.projectName}</td>
+            <td onClick={() => handleRowClick(recording.id)}>{recording.testSuiteName}</td>
+            <td onClick={() => handleRowClick(recording.id)}>{recording.testCaseName}</td>
             <td className="td-center-align">
                 <i className="fa fa-pencil margin-right" onClick={() => handleEdit(recording.id)} aria-hidden="true"></i>
                 <i className="fa fa-play-circle margin-right" aria-hidden="true"></i>

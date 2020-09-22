@@ -16,7 +16,7 @@ export interface BodyProps {
   codeBlocks: Block[],
   destroyBlock: (index: number) => void,
   moveBlock: (dragIdx: number, dropIdx: number) => void,
-  toggleInfoDisplay: () => void,
+  toggleInfoDisplay: (test: any) => void,
   handleDelete: (id: any) => void,
   toggleEditDisplay: (test: any) => void
 }

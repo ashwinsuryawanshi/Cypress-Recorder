@@ -1,18 +1,23 @@
 import * as React from 'react';
-import {codeSnippet, ControlAction} from './../../constants';
 import TestName from "./TestName";
+import CodeDisplay from "./CodeDisplay";
+import {Block} from "../../types";
 
 export interface EditTestProps {
     test: any
+    codeBlocks: Block[],
+    destroyBlock: (index: number) => void,
+    moveBlock: (dragIdx: number, dropIdx: number) => void,
 }
 
-export default ({test}: EditTestProps) => (
+export default ({test, codeBlocks, destroyBlock, moveBlock}: EditTestProps) => (
     <div id="infobox">
-        <TestName testName={test.case} editable={false}/>
+        <TestName testName={test.testCaseName} editable={false}/>
         <pre>
-        <code>
-          {codeSnippet}
-        </code>
+        {/*<code>*/}
+        {/*  {test.testScript}*/}
+        {/*</code>*/}
+            {<CodeDisplay codeBlocks={codeBlocks} destroyBlock={destroyBlock} moveBlock={moveBlock} />}
       </pre>
     </div>
 );
